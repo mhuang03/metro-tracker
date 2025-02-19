@@ -4,10 +4,10 @@
 	import StopLabel from '$lib/components/StopLabel.svelte';
 
 	let { stationInfo } = $props();
-	let id = stationInfo.id;
-	let name = stationInfo.name;
-	let EB = stationInfo.EB;
-	let WB = stationInfo.WB;
+	let id = $derived(stationInfo.id);
+	let name = $derived(stationInfo.name);
+	let EB = $derived(stationInfo.EB);
+	let WB = $derived(stationInfo.WB);
 </script>
 
 <div class="grid grid-cols-subgrid col-span-full">

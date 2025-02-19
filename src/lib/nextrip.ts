@@ -22,6 +22,8 @@ type Departure = {
 };
 
 const nextDeparture = (departures: Departure[]) => {
+	if (departures.length === 0) return null;
+
 	departures.forEach((dep: Departure) => {
 		dep.departure_date = new Date(dep.departure_time * 1000);
 	});
@@ -37,16 +39,17 @@ export const getData = async (fetch: CallableFunction) => {
 	for (const station in STATIONS) {
 		let thisStation: any = { id: station, name: STATIONS[station] };
 		for (const direction in DIRECTIONS) {
+			const dirName = DIRECTIONS[direction];
 			const url = `https://svc.metrotransit.org/nextrip/${ROUTE_ID}/${direction}/${station}`;
 			const response = await fetch(url);
 			const data = await response.json();
 			const nextDep = nextDeparture(data.departures);
-			const dirName = DIRECTIONS[direction];
 			const now = new Date();
-			const mins = Math.floor((nextDep.departure_time - now.getTime() / 1000) / 60);
 
 			if (!nextDep) {
-				thisStation[dirName] = 'N/A';
+				thisStation[dirName] = {
+					text: 'N/A'
+				};
 				continue;
 			}
 
@@ -62,6 +65,5 @@ export const getData = async (fetch: CallableFunction) => {
 		}
 		deps.push(thisStation);
 	}
-	console.log(deps);
 	return deps;
 };

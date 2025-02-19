@@ -6,6 +6,7 @@
 	import { page } from '$app/state';
 
 	let stationInfos = $state.raw(page.data.stationInfos);
+	$inspect(stationInfos);
 
 	const timeNow = () =>
 		new Date().toLocaleTimeString('en-US', {
@@ -14,6 +15,7 @@
 			second: '2-digit',
 			timeZone: 'America/Chicago'
 		});
+
 	let lastUpdate = $state(timeNow());
 	let currentTime = $state(timeNow());
 
