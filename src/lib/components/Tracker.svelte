@@ -3,9 +3,9 @@
 	import { getData } from '$lib/nextrip';
 	import Station from '$lib/components/Station.svelte';
 	import Separator from '$lib/components/Separator.svelte';
+	import { page } from '$app/state';
 
-	let { data } = $props();
-	let stationInfos = $state.raw(data.stationInfos);
+	let stationInfos = $state.raw(page.data.stationInfos);
 
 	const timeNow = () =>
 		new Date().toLocaleTimeString('en-US', {
