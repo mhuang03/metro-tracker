@@ -63,6 +63,5 @@ export const getData = async (fetch: CallableFunction) => {
 		}
 		deps.push(thisStation);
 	}
-	console.log(deps);
 	return deps;
 };
