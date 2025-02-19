@@ -11,7 +11,7 @@
 </script>
 
 <div class="grid grid-cols-subgrid col-span-full">
-	<DepTime time={WB.time} mins={WB.mins} />
+	<DepTime text={WB.text} />
 	<StopLabel {id} {name} />
-	<DepTime time={EB.time} mins={EB.mins} />
+	<DepTime text={EB.text} />
 </div>

@@ -57,11 +57,11 @@ export const getData = async (fetch: CallableFunction) => {
 				timeZone: 'America/Chicago'
 			});
 			thisStation[dirName] = {
-				time: nextTime,
-				mins: mins
+				text: nextDep.departure_text.toUpperCase()
 			};
 		}
 		deps.push(thisStation);
 	}
+	console.log(deps);
 	return deps;
 };

@@ -17,38 +17,40 @@
 	let lastUpdate = $state(timeNow());
 	let currentTime = $state(timeNow());
 
-	let interval1: NodeJS.Timeout;
-	let interval2: NodeJS.Timeout;
+	let timeSinceLast = 0;
+	let interval: NodeJS.Timeout;
 	onMount(() => {
-		interval1 = setInterval(() => {
-			getData(fetch).then((newData) => {
-				stationInfos = newData;
-				lastUpdate = timeNow();
-			});
-		}, 15000);
-		interval2 = setInterval(() => {
+		interval = setInterval(() => {
 			currentTime = timeNow();
+			if (timeSinceLast >= 15) {
+				getData(fetch).then((newData) => {
+					stationInfos = newData;
+					lastUpdate = timeNow();
+				});
+				timeSinceLast = 0;
+			} else timeSinceLast += 1;
 		}, 1000);
 	});
 	onDestroy(() => {
-		clearInterval(interval1);
-		clearInterval(interval2);
+		clearInterval(interval);
 	});
 </script>
 
-<div class="info-box grid grid-cols-[repeat(3,max-content)] gap-3">
-	{#each stationInfos as stationInfo, i}
-		<Station {stationInfo} />
-		{#if i < stationInfos.length - 1}
-			<Separator />
-		{/if}
-	{/each}
-</div>
-<div class="text-right">
-	<p>
-		Now: {currentTime}
-	</p>
-	<p>
-		Last updated: {lastUpdate}
-	</p>
+<div class="flex flex-col items-center gap-6">
+	<div class="info-box grid grid-cols-[repeat(3,max-content)] gap-3">
+		{#each stationInfos as stationInfo, i}
+			<Station {stationInfo} />
+			{#if i < stationInfos.length - 1}
+				<Separator />
+			{/if}
+		{/each}
+	</div>
+	<div class="text-right">
+		<p>
+			Now: {currentTime}
+		</p>
+		<p>
+			Last updated: {lastUpdate}
+		</p>
+	</div>
 </div>
