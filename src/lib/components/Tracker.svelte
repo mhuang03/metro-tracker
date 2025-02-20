@@ -51,9 +51,9 @@
 		class="grid gap-3 grid-cols-[repeat(3,max-content)] sm:grid-cols-auto sm:grid-rows-[repeat(3,max-content)]"
 	>
 		{#each stationInfos as stationInfo, i}
-			<Station {stationInfo} />
+			<Station {stationInfo} index={2 * i} />
 			{#if i < stationInfos.length - 1}
-				<Separator />
+				<Separator index={2 * i + 1} />
 			{/if}
 		{/each}
 	</div>
