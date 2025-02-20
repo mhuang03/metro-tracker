@@ -1,5 +1,5 @@
 <script>
-	import { getData, STATIONS, DIRECTIONS } from '$lib/nextrip';
+	import Row from '$lib/components/Row.svelte';
 	import DepTime from '$lib/components/DepTime.svelte';
 	import StopLabel from '$lib/components/StopLabel.svelte';
 
@@ -10,8 +10,8 @@
 	let WB = $derived(stationInfo.WB);
 </script>
 
-<div class="grid grid-cols-subgrid col-span-full">
+<Row>
 	<DepTime text={WB.text} />
 	<StopLabel {id} {name} />
 	<DepTime text={EB.text} />
-</div>
+</Row>

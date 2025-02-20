@@ -47,7 +47,7 @@
 </script>
 
 <div class="flex flex-col items-center gap-6">
-	<div class="grid grid-cols-[repeat(3,max-content)] gap-3">
+	<div class="grid gap-3 grid-cols-[repeat(3,max-content)]">
 		{#each stationInfos as stationInfo, i}
 			<Station {stationInfo} />
 			{#if i < stationInfos.length - 1}
