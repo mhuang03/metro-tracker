@@ -3,7 +3,7 @@
 </script>
 
 <div
-	class="grid gap-3 grid-cols-subgrid col-span-full md:col-auto md:grid-rows-subgrid md:row-span-full"
+	class="grid gap-3 grid-cols-subgrid col-span-full sm:col-auto sm:grid-rows-subgrid sm:row-span-full"
 >
 	{@render children()}
 </div>

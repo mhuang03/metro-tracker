@@ -48,7 +48,7 @@
 
 <div class="flex flex-col items-center gap-6">
 	<div
-		class="grid gap-3 grid-cols-[repeat(3,max-content)] md:grid-cols-auto md:grid-rows-[repeat(3,max-content)]"
+		class="grid gap-3 grid-cols-[repeat(3,max-content)] sm:grid-cols-auto sm:grid-rows-[repeat(3,max-content)]"
 	>
 		{#each stationInfos as stationInfo, i}
 			<Station {stationInfo} />
