@@ -37,7 +37,7 @@
 		stroke-linejoin="round"
 		stroke-width="4"
 	>
-		<path d="M-98 0H96" />
+		<path stroke-dasharray="5,10" d="M-98 0H96" />
 		<path d="M80 -18L98 0L80 18" />
 	</g>
 </svg>
