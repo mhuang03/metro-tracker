@@ -8,10 +8,13 @@
 	let stationInfos = $state.raw(page.data.stationInfos);
 	$inspect(stationInfos);
 
+	let lastUpdate = $state(new Date());
+	let currentTime = $state(new Date());
+
 	const updateData = () =>
 		getData(fetch).then((newData) => {
 			stationInfos = newData;
-			lastUpdate = new Date();
+			lastUpdate = currentTime;
 		});
 
 	const getTimeText = (date: Date) =>
@@ -22,12 +25,10 @@
 			timeZone: 'America/Chicago'
 		});
 
-	let lastUpdate = $state(new Date());
-	let currentTime = $state(new Date());
 	let lastUpdateText = $derived(getTimeText(lastUpdate));
 	let currentTimeText = $derived(getTimeText(currentTime));
 
-	let interval: NodeJS.Timeout;
+	let interval: any;
 	onMount(() => {
 		window.addEventListener('focus', () => {
 			updateData();
@@ -48,7 +49,7 @@
 
 <div class="flex flex-col items-center gap-6">
 	<div
-		class="grid gap-3 grid-cols-[repeat(3,max-content)] sm:grid-cols-auto sm:grid-rows-[repeat(3,max-content)]"
+		class="grid gap-3 grid-cols-[repeat(3,max-content)] sm:grid-cols-auto sm:grid-rows-[repeat(3,max-content)] sm:[direction:rtl]"
 	>
 		{#each stationInfos as stationInfo, i}
 			<Station {stationInfo} index={2 * i} />
