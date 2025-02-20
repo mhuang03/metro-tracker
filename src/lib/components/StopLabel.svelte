@@ -2,6 +2,6 @@
 	let { id, name } = $props();
 </script>
 
-<div class="stop-label m-auto text-center">
+<div class="m-auto text-center">
 	<p>{id}</p>
 </div>

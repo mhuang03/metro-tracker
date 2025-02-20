@@ -2,7 +2,7 @@
 	let { text } = $props();
 </script>
 
-<div class="dep-time text-center rounded-full border p-1 w-25 min-w-fit">
+<div class="text-center rounded-full border p-1 w-25 min-w-fit">
 	<p>
 		{text}
 	</p>
