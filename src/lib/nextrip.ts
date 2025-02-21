@@ -28,7 +28,9 @@ const sortDepartures = (departures: Departure[]) => {
 	departures.forEach((dep: Departure) => {
 		dep.departure_date = new Date(dep.departure_time * 1000);
 		dep.departure_text = dep.departure_text.toUpperCase();
-		dep.departure_text.includes(':') ? getTimeHM(dep.departure_date) : dep.departure_text;
+		dep.departure_text = dep.departure_text.includes(':')
+			? getTimeHM(dep.departure_date)
+			: dep.departure_text;
 	});
 
 	return departures.sort((a: Departure, b: Departure) => a.departure_time - b.departure_time);
