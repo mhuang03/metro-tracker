@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import { getData } from '$lib/nextrip';
+	import { getTimeHMS } from '$lib/utils';
 	import Station from '$lib/components/Station.svelte';
 	import Separator from '$lib/components/Separator.svelte';
 	import { page } from '$app/state';
@@ -10,23 +11,20 @@
 
 	let lastUpdate = $state(new Date());
 	let currentTime = $state(new Date());
+	let updateInProgress = $state(false);
 
-	const updateData = () =>
-		getData(fetch).then((newData) => {
+	const updateData = () => {
+		updateInProgress = true;
+		return getData().then((newData) => {
 			stationInfos = newData;
 			lastUpdate = currentTime;
+			updateInProgress = false;
 		});
+	};
 
-	const getTimeText = (date: Date) =>
-		date.toLocaleTimeString('en-US', {
-			hour: '2-digit',
-			minute: '2-digit',
-			second: '2-digit',
-			timeZone: 'America/Chicago'
-		});
-
-	let lastUpdateText = $derived(getTimeText(lastUpdate));
-	let currentTimeText = $derived(getTimeText(currentTime));
+	let lastUpdateText = $derived(getTimeHMS(lastUpdate));
+	$inspect(lastUpdateText);
+	let currentTimeText = $derived(getTimeHMS(currentTime));
 
 	let interval: any;
 	onMount(() => {
@@ -36,7 +34,7 @@
 
 		interval = setInterval(() => {
 			currentTime = new Date();
-			if (currentTime.getTime() - lastUpdate.getTime() >= 15000) {
+			if (currentTime.getTime() - lastUpdate.getTime() >= 15000 && !updateInProgress) {
 				updateData();
 			}
 		}, 1000);

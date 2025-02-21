@@ -1,3 +1,5 @@
+import { getTimeHM } from '$lib/utils';
+
 const ROUTE_ID = 902;
 
 interface Map {
@@ -15,53 +17,34 @@ export const STATIONS: Map = {
 	WEBK: 'West Bank'
 };
 
-type Departure = {
+export type Departure = {
+	actual: boolean;
 	departure_time: number;
 	departure_text: string;
 	departure_date: Date;
 };
 
-const nextDeparture = (departures: Departure[]) => {
-	if (departures.length === 0) return null;
-
+const sortDepartures = (departures: Departure[]) => {
 	departures.forEach((dep: Departure) => {
 		dep.departure_date = new Date(dep.departure_time * 1000);
+		dep.departure_text = dep.departure_text.toUpperCase();
+		dep.departure_text.includes(':') ? getTimeHM(dep.departure_date) : dep.departure_text;
 	});
 
-	return departures.reduce((acc: Departure, dep: Departure) => {
-		if (dep.departure_time < acc.departure_time) return dep;
-		return acc;
-	});
+	return departures.sort((a: Departure, b: Departure) => a.departure_time - b.departure_time);
 };
 
-export const getData = async (fetch: CallableFunction) => {
+export const getData = async (f = fetch) => {
 	let deps = [];
 	for (const station in STATIONS) {
 		let thisStation: any = { id: station, name: STATIONS[station] };
 		for (const direction in DIRECTIONS) {
 			const dirName = DIRECTIONS[direction];
 			const url = `https://svc.metrotransit.org/nextrip/${ROUTE_ID}/${direction}/${station}`;
-			const response = await fetch(url);
+			const response = await f(url);
 			const data = await response.json();
-			const nextDep = nextDeparture(data.departures);
-			const now = new Date();
-
-			if (!nextDep) {
-				thisStation[dirName] = {
-					text: 'N/A'
-				};
-				continue;
-			}
-
-			// const nextText = nextDep.departure_text.toUpperCase();
-			const nextTime = nextDep.departure_date.toLocaleTimeString('en-US', {
-				hour: '2-digit',
-				minute: '2-digit',
-				timeZone: 'America/Chicago'
-			});
-			thisStation[dirName] = {
-				text: nextDep.departure_text.toUpperCase()
-			};
+			const deps = sortDepartures(data.departures);
+			thisStation[dirName] = deps;
 		}
 		deps.push(thisStation);
 	}

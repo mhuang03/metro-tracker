@@ -11,7 +11,7 @@
 </script>
 
 <Row {index}>
-	<DepTime text={EB.text} />
+	<DepTime deps={EB} />
 	<StopLabel {id} {name} />
-	<DepTime text={WB.text} />
+	<DepTime deps={WB} />
 </Row>
