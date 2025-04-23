@@ -45,7 +45,7 @@
 	});
 </script>
 
-<div class="flex flex-col items-center gap-6">
+<div class="flex flex-col items-center">
 	<div
 		class="grid gap-3 grid-cols-[repeat(3,max-content)] sm:grid-cols-auto sm:grid-rows-[repeat(3,max-content)] sm:[direction:rtl]"
 	>
@@ -56,12 +56,9 @@
 			{/if}
 		{/each}
 	</div>
-	<div class="text-right">
-		<p>
-			Now: {currentTimeText}
-		</p>
-		<p>
-			Last updated: {lastUpdateText}
-		</p>
+	<p class="mt-3 self-end">(* means scheduled)</p>
+	<div class="text-right mt-6 self-end sm:self-center">
+		<p>Now: {currentTimeText}</p>
+		<p>Last updated: {lastUpdateText}</p>
 	</div>
 </div>
